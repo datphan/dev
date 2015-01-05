@@ -30,7 +30,17 @@ if node['teracy-dev']['mysql']['enabled']
       action :nothing
     end.run_action(:run)
 
-    include_recipe 'mysql::server'
-    include_recipe 'mysql::client'
+    # server
+    mysql_service 'default' do
+      version '5.7'
+      bind_address '0.0.0.0'
+      initial_root_password node['teracy-dev']['mysql']['password']
+      action [:create, :start]
+    end
+
+    # client
+    mysql_client 'default' do
+      action :create
+    end
 
 end
