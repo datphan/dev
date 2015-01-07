@@ -215,7 +215,10 @@
         {
           "name": "tree"
         }
-      ]
+      ],
+      "codebox": {
+        "enabled":false
+      }
     }
   }
   //,
