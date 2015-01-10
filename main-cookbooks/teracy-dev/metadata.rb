@@ -6,7 +6,7 @@ description      'Installs/Configures teracy-dev'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.2.0'
 
-%w{ magic_shell nodejs npm rbenv ark python java maven php mongodb mysql postgresql git ssh_known_hosts pyenv apache2}.each do |dep|
+%w{ magic_shell nodejs npm rbenv ark python java maven php phpmyadmin mongodb mysql postgresql git ssh_known_hosts pyenv apache2}.each do |dep|
     depends dep
 end
 

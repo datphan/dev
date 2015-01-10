@@ -44,16 +44,51 @@ if node['teracy-dev']['php']['enabled']
       end
   else
     	include_recipe 'php'
-        if  node['teracy-dev']['mysql']['enabled']
-       		include_recipe 'php::module_mysql'
-       	end
-    end
+      if  node['teracy-dev']['mysql']['enabled']
+     		include_recipe 'php::module_mysql'
+     	end
+  end
 
-    bash 'clean up apache mess' do
-        code <<-EOF
-            a2enmod php5 || true;
-            service apache2 restart;
-        EOF
-        user 'root'
-    end
+  bash 'clean up apache mess' do
+      code <<-EOF
+          a2enmod php5 || true;
+          service apache2 restart;
+      EOF
+      user 'root'
+  end
+
+  if node['teracy-dev']['php']['phpmyadmin']['enabled']
+
+      phpmyadmin_user = node['teracy-dev']['php']['phpmyadmin']['user']
+      phpmyadmin_group = node['teracy-dev']['php']['phpmyadmin']['group']
+      phpmyadmin_version = node['teracy-dev']['php']['phpmyadmin']['version']
+      phpmyadmin_checksum = node['teracy-dev']['php']['phpmyadmin']['checksum']
+      phpmyadmin_mirror = node['teracy-dev']['php']['phpmyadmin']['mirror']
+
+      node.override['phpmyadmin']['fpm'] = node['teracy-dev']['php']['phpmyadmin']['fpm']
+      
+      
+
+      if !phpmyadmin_version.nil? and !phpmyadmin_version.strip().empty?
+          node.override['phpmyadmin']['version'] = phpmyadmin_version
+      end
+
+      if !phpmyadmin_checksum.nil? and !phpmyadmin_checksum.strip().empty?
+          node.override['phpmyadmin']['checksum'] = phpmyadmin_checksum
+      end
+
+      if !phpmyadmin_mirror.nil? and !phpmyadmin_mirror.strip().empty?
+          node.override['phpmyadmin']['mirror'] = phpmyadmin_mirror
+      end
+
+      include_recipe 'phpmyadmin::default'
+
+      phpmyadmin_db 'Test DB' do
+        host '0.0.0.0'
+        username 'root'
+        password 'teracy'
+      end
+
+  end
+
 end

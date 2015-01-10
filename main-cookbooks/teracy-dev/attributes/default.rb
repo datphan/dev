@@ -66,3 +66,12 @@ end
 if node['teracy-dev']['apache']['enabled']
     override['apache']['dir'] = '/etc/apache2'
 end
+
+default['teracy-dev']['php'] = {
+    'phpmyadmin' => {
+        'enabled' => true,
+        'fpm' => false,
+        'user' => 'vagrant',
+        'group' => 'vagrant'
+    }
+}

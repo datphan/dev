@@ -182,7 +182,10 @@
       "php":{
         "enabled":true,
         "version":"5.4.29", //empty string: default ubuntu distribution; http://php.net/downloads.php
-        "checksum":"9caf973b19ba93bb2b78f78c61643d5d"
+        "checksum":"9caf973b19ba93bb2b78f78c61643d5d",
+        "phpmyadmin":{
+          "enabled":true
+        }
       },
       "mysql":{
         "enabled":true,
