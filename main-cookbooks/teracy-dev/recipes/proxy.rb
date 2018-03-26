@@ -128,13 +128,19 @@ if proxy_conf['enabled'] == true
             notifies :redeploy, "docker_container[#{container_conf['name']}]"
         end
 
+        envs = []
+
+        if container_conf['force_https'] == true
+            envs = ['VIRTUAL_PORT=443', 'VIRTUAL_PROTO=https', "VIRTUAL_HOST=#{node.name}"]
+        end
+
         docker_container container_conf['name'] do
             repo container_conf['repo']
             tag container_conf['tag']
             volumes container_conf['volumes']
             restart_policy container_conf['restart_policy']
             port container_conf['port']
-            env ['VIRTUAL_PORT=443', 'VIRTUAL_PROTO=https', "VIRTUAL_HOST=#{node.name}"]
+            env envs
         end
     end
 end

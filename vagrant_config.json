@@ -206,7 +206,8 @@
               "/etc/nginx/certs:/etc/nginx/certs"
             ],
             "restart_policy": "always",
-            "port": ["80:80", "443:443"]
+            "port": ["80:80", "443:443"],
+            "force_https": false
           }
         }
       }
