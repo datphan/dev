@@ -180,10 +180,18 @@
         },
         "proxy": {
           "enabled": true,
-          "certs": {
+          "server": {
             "enabled": true,
-            "sources": ["nginx/certs/default.crt", "nginx/certs/default.key"],
-            "destination": "/etc/nginx/certs",
+            "files": [
+              {
+                "sources": [
+                  "nginx/certs/default.crt",
+                  "nginx/certs/default.key"
+                ],
+                "destination": "/etc/nginx/certs",
+                "rename_host": true
+              }
+            ],
             "owner": "vagrant",
             "group": "vagrant",
             "mode": "0644"
@@ -193,7 +201,10 @@
             "name": "nginx-proxy",
             "repo": "jwilder/nginx-proxy",
             "tag": "alpine",
-            "volumes": ["/var/run/docker.sock:/tmp/docker.sock:ro", "/etc/nginx/certs:/etc/nginx/certs"],
+            "volumes": [
+              "/var/run/docker.sock:/tmp/docker.sock:ro",
+              "/etc/nginx/certs:/etc/nginx/certs"
+            ],
             "restart_policy": "always",
             "port": ["80:80", "443:443"]
           }
